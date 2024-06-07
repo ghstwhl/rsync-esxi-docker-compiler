@@ -1,5 +1,7 @@
 # rsync-esxi-compiler
-This proyect was created to allow the transfer of big files over unstable networks
+This project is a fork of (gbenguria's)[https://github.com/gbenguria/rsync-esxi-docker-compiler] project, which was was created compile a statically linked version of rsync suitable for use on VMWare ESXi systems.  The purpose of this fork is to bring some of the components up to date.
+
+I have verfied that the version of `rsync` compiled by this container works with ESXi 7.0 Update 3
 
 ## prerequsites
 
@@ -11,20 +13,16 @@ This proyect was created to allow the transfer of big files over unstable networ
 * rsync
 
 ## usage
-in order to generate the statically compiled rsync for esxi 7.0 do the following.
+in order to generate the statically compiled rsync for esxi 7.0 do the following:
 
-``` bash
+```bash
 cd this_repo
 echo to create the image that compiles rsync statically
 docker build . -t rsync-esxi-compiler
-echo to start the container in order to be able to copy the rsync binary
-docker run -d --name rsync-esxi-compiler rsync-esxi-compiler /bin/bash -c "while true; do sleep 30; done;"
-docker cp rsync-esxi-compiler:/rsync/rsync ~/.
-echo to check that effectivelly is a statically compiled binary
-ldd ~/rsync
-echo to copy to the target esxi in a folder that belongs to the path
-chmod 555 ~/rsync
-scp ~/rsync root@esxi1.somedomain:/bin/rsync
-echo to use it to create send a file 
-while ( ! rsync -av --progress --bwlimit=20480 --inplace --partial --append ubuntu-22.04-live-server-amd64.iso root@esxi1.somedomain:/targetfolder ); do sleep 10; done
+
+echo To copy the compiled rsync binary to the current directory:
+docker run -v ${PWD}:/tmp/pwd -d --name rsync-esxi-compiler rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
+
+echo You can now copy rsync to the remote ESXi system, to the /bin/ directory.
+echo Be suure to chmod +x /bin/rsync on the remote ESXi system.
 ```
