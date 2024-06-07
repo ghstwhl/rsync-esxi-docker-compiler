@@ -13,16 +13,21 @@ I have verfied that the version of `rsync` compiled by this container works with
 * rsync
 
 ## usage
-in order to generate the statically compiled rsync for esxi 7.0 do the following:
+In order to generate the statically compiled rsync for esxi 7.0, use one of the below methods.  Both methods will place a copy of the statically linked `rsync` binary on our local machine.  You can then copy this `rsync` binary to the remote ESXi system, most likely into the /bin/ directory.  Be suure to chmod +x /bin/rsync on the remote ESXi system.
 
-```bash
-cd this_repo
-echo to create the image that compiles rsync statically
-docker build . -t rsync-esxi-compiler
+If you copy `rsync` into a directory that is not in the default PATH on ESXi, you will need to use the `--rsync-path` parameter when using `rsync` to transfer files *to* the ESXi system.  For example, if I place the `rsync` binary into `/vmfs/volumes/datastore1/tools/bin/` I have to use this parameter when invoking `rsync` *from* a remote system:  `--rsync-path=/vmfs/volumes/datastore1/tools/bin/rsync`
 
-echo To copy the compiled rsync binary to the current directory:
+
+### Use the github built container:
+```
+docker pull ghcr.io/ghstwhl/rsync-esxi-docker-compiler:master
 docker run -v ${PWD}:/tmp/pwd -d --name rsync-esxi-compiler rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
+```
 
-echo You can now copy rsync to the remote ESXi system, to the /bin/ directory.
-echo Be suure to chmod +x /bin/rsync on the remote ESXi system.
+### Build your own copy of the container from this repo:
+```
+git clone https://github.com/ghstwhl/rsync-esxi-docker-compiler.git
+cd rsync-esxi-docker-compiler
+docker build . -t rsync-esxi-compiler
+docker run -v ${PWD}:/tmp/pwd -d --name rsync-esxi-compiler rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
 ```
