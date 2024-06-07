@@ -1,7 +1,12 @@
 # rsync-esxi-compiler
 This project is a fork of (gbenguria's)[https://github.com/gbenguria/rsync-esxi-docker-compiler] project, which was was created to compile a statically linked version of rsync suitable for use on VMWare ESXi systems.  The purpose of this fork is to bring some of the components up to date.
 
-I have verfied that the version of `rsync` compiled by this container works with ESXi 6.7 and ESXi 7.0 Update 3
+The version of rsynmc build by this container was verfied on 2024-06-07 to work on the following versions of VMWare ESXi:
+
+* ESXi 6.5
+* ESXi 6.7
+* ESXi 7.0
+
 
 ## prerequsites
 
