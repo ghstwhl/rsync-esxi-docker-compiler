@@ -21,7 +21,7 @@ If you copy `rsync` into a directory that is not in the default PATH on ESXi, yo
 ### Use the github built container:
 ```
 docker pull ghcr.io/ghstwhl/rsync-esxi-docker-compiler:master
-docker run -v ${PWD}:/tmp/pwd -d rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
+docker run -v ${PWD}:/tmp/pwd -d ghcr.io/ghstwhl/rsync-esxi-docker-compiler:master /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
 ```
 
 ### Build your own copy of the container from this repo:
