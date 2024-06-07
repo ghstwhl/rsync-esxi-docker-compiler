@@ -1,7 +1,7 @@
 # rsync-esxi-compiler
 This project is a fork of (gbenguria's)[https://github.com/gbenguria/rsync-esxi-docker-compiler] project, which was was created compile a statically linked version of rsync suitable for use on VMWare ESXi systems.  The purpose of this fork is to bring some of the components up to date.
 
-I have verfied that the version of `rsync` compiled by this container works with ESXi 7.0 Update 3
+I have verfied that the version of `rsync` compiled by this container works with ESXi 6.7 and ESXi 7.0 Update 3
 
 ## prerequsites
 
@@ -21,7 +21,7 @@ If you copy `rsync` into a directory that is not in the default PATH on ESXi, yo
 ### Use the github built container:
 ```
 docker pull ghcr.io/ghstwhl/rsync-esxi-docker-compiler:master
-docker run -v ${PWD}:/tmp/pwd -d --name rsync-esxi-compiler rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
+docker run -v ${PWD}:/tmp/pwd -d rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
 ```
 
 ### Build your own copy of the container from this repo:
@@ -29,5 +29,5 @@ docker run -v ${PWD}:/tmp/pwd -d --name rsync-esxi-compiler rsync-esxi-compiler 
 git clone https://github.com/ghstwhl/rsync-esxi-docker-compiler.git
 cd rsync-esxi-docker-compiler
 docker build . -t rsync-esxi-compiler
-docker run -v ${PWD}:/tmp/pwd -d --name rsync-esxi-compiler rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
+docker run -v ${PWD}:/tmp/pwd -d rsync-esxi-compiler /bin/bash -c "cp /root/rsync/rsync /tmp/pwd"
 ```
